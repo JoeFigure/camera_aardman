@@ -1075,7 +1075,7 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
   } else if ([@"setAutoExposure" isEqualToString:call.method]){
         NSNumber *enable = call.arguments[@"enable"];
 
-        [_camera setAutoFocus:[enable boolValue]];
+        [_camera setAutoExposure:[enable boolValue]];
         
     }
 

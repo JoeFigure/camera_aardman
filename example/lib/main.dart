@@ -245,7 +245,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
               : Icon(Icons.access_alarms),
           color: Colors.blue,
           onPressed: (controller != null && controller.value.isInitialized)
-              ? toogleAutoFocus
+              ? toogleAutoExposure
               : null,
         ),
         _flashButton(),
@@ -403,6 +403,14 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
       if (mounted) setState(() {});
       showInSnackBar('Video recording resumed');
     });
+  }
+
+  bool _autoExposure = true;
+
+  void toogleAutoExposure() {
+    _autoExposure = !_autoExposure;
+    controller.setAutoExposure(_autoExposure);
+    showInSnackBar('Toogle auto focus');
   }
 
   void toogleAutoFocus() {
