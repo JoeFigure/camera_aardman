@@ -245,7 +245,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
               : Icon(Icons.access_alarms),
           color: Colors.blue,
           onPressed: (controller != null && controller.value.isInitialized)
-              ? toogleAutoExposure
+              ? toogleAutoFocus
               : null,
         ),
         _flashButton(),

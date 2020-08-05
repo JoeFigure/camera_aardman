@@ -764,7 +764,7 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
     }else{
 //        _captureDevice.focusMode = AVCaptureFocusModeLocked;
         
-        [_captureDevice setFocusModeLockedWithLensPosition:0.0 completionHandler:^(CMTime syncTime) {
+        [_captureDevice setFocusModeLockedWithLensPosition:AVCaptureLensPositionCurrent completionHandler:^(CMTime syncTime) {
              
          }];
     }
