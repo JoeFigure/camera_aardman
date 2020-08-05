@@ -778,6 +778,34 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
     [_captureDevice unlockForConfiguration];
 }
 
+- (void)setAutoExposure:(BOOL)enable
+{
+
+  
+
+    NSError *error = nil;
+
+    if(_captureDevice == nil){
+        return;
+    }
+
+    if (![_captureDevice lockForConfiguration:&error]) {
+        return;
+    }
+
+     if(enable){
+         [_captureDevice setExposureMode:2];
+//         _captureDevice.exposureMode = 2;
+     }else{
+//          _captureDevice.exposureMode = 0;
+         [_captureDevice setExposureModeCustomWithDuration:AVCaptureExposureDurationCurrent ISO:AVCaptureISOCurrent completionHandler:^(CMTime syncTime) {
+             
+         }];
+     }
+    
+    [_captureDevice unlockForConfiguration];
+}
+
 - (void)zoom:(double)zoom {
 
     NSError *error = nil;
@@ -1044,7 +1072,12 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
 //      [_camera test];
       [_camera setAutoFocus:[enable boolValue]];
       
-  }
+  } else if ([@"setAutoExposure" isEqualToString:call.method]){
+        NSNumber *enable = call.arguments[@"enable"];
+
+        [_camera setAutoFocus:[enable boolValue]];
+        
+    }
 
     else {
     NSDictionary *argsMap = call.arguments;

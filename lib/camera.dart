@@ -632,6 +632,19 @@ class CameraController extends ValueNotifier<CameraValue> {
     }
   }
 
+  // Set autoFocusEnabled on camera
+  Future<void> setAutoExposure(bool newValue) async {
+    // value = value.copyWith(autoFocusEnabled: newValue);
+    try {
+      await _channel.invokeMethod<void>(
+        'setAutoExposure',
+        <String, dynamic>{'enable': newValue},
+      );
+    } on PlatformException catch (e) {
+      throw CameraException(e.code, e.message);
+    }
+  }
+
   ///
   /// change zoom by specific [step].
   ///
