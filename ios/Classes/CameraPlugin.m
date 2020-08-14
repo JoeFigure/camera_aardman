@@ -806,6 +806,37 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
     [_captureDevice unlockForConfiguration];
 }
 
+- (void)setAutoWB:(BOOL)enable
+{
+
+  
+    if (enable) {
+        printf("WB TRUE");
+    }else{
+        printf("WB FALSE");
+    }
+
+    NSError *error = nil;
+
+    if(_captureDevice == nil){
+        return;
+    }
+
+    if (![_captureDevice lockForConfiguration:&error]) {
+        return;
+    }
+
+     if(enable){
+         [_captureDevice setWhiteBalanceMode:2];
+//         _captureDevice.exposureMode = 2;
+     }else{
+//          _captureDevice.exposureMode = 0;
+         [_captureDevice setWhiteBalanceMode:0];
+     }
+    
+    [_captureDevice unlockForConfiguration];
+}
+
 - (void)zoom:(double)zoom {
 
     NSError *error = nil;
@@ -1076,6 +1107,13 @@ FourCharCode const videoFormat = kCVPixelFormatType_32BGRA;
         NSNumber *enable = call.arguments[@"enable"];
 
         [_camera setAutoExposure:[enable boolValue]];
+        
+    }
+
+      else if ([@"setWhiteBalance" isEqualToString:call.method]){
+        NSNumber *enable = call.arguments[@"enable"];
+
+        [_camera setAutoWB:[enable boolValue]];
         
     }
 

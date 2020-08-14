@@ -245,7 +245,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
               : Icon(Icons.access_alarms),
           color: Colors.blue,
           onPressed: (controller != null && controller.value.isInitialized)
-              ? toogleAutoFocus
+              ? toogleAutoWhiteBalance
               : null,
         ),
         _flashButton(),
@@ -406,6 +406,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
   }
 
   bool _autoExposure = true;
+  bool _autoWhiteBalance = true;
 
   void toogleAutoExposure() {
     _autoExposure = !_autoExposure;
@@ -416,6 +417,12 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
   void toogleAutoFocus() {
     controller.setAutoFocus(!controller.value.autoFocusEnabled);
     showInSnackBar('Toogle auto focus');
+  }
+
+  void toogleAutoWhiteBalance() {
+    _autoWhiteBalance = !_autoWhiteBalance;
+    controller.setAutoWhiteBalance(_autoWhiteBalance);
+    showInSnackBar('Toogle auto WB');
   }
 
   Future<String> startVideoRecording() async {

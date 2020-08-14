@@ -233,6 +233,7 @@ class CameraValue {
       Size previewSize,
       bool isRecordingPaused,
       bool autoFocusEnabled,
+      bool autoWhiteBalanceEnabled,
       FlashMode flashMode}) {
     return CameraValue(
       isInitialized: isInitialized ?? this.isInitialized,
@@ -271,7 +272,8 @@ class CameraController extends ValueNotifier<CameraValue> {
       {this.enableAudio = true,
       this.autoFocusEnabled = false,
       this.flashMode = FlashMode.off,
-      this.enableAutoExposure = true})
+      this.enableAutoExposure = true,
+      this.enableAutoWhiteBalance = true})
       : super(const CameraValue.uninitialized());
 
   final CameraDescription description;
@@ -284,6 +286,7 @@ class CameraController extends ValueNotifier<CameraValue> {
   final bool autoFocusEnabled;
   final FlashMode flashMode;
   final enableAutoExposure;
+  final enableAutoWhiteBalance;
 
   int _textureId;
   bool _isDisposed = false;
@@ -309,6 +312,7 @@ class CameraController extends ValueNotifier<CameraValue> {
           'enableAudio': enableAudio,
           'autoFocusEnabled': autoFocusEnabled,
           'enableAutoExposure': autoFocusEnabled,
+          'enableAutoWhiteBalance': autoFocusEnabled,
           'flashMode': flashMode.index,
         },
       );
@@ -638,6 +642,20 @@ class CameraController extends ValueNotifier<CameraValue> {
     try {
       await _channel.invokeMethod<void>(
         'setAutoExposure',
+        <String, dynamic>{'enable': newValue},
+      );
+    } on PlatformException catch (e) {
+      throw CameraException(e.code, e.message);
+    }
+  }
+
+  // Set autoFocusEnabled on camera
+  Future<void> setAutoWhiteBalance(bool newValue) async {
+    // value = value.copyWith(autoFocusEnabled: newValue);
+    print("setAutoWhiteBalance $newValue");
+    try {
+      await _channel.invokeMethod<void>(
+        'setWhiteBalance',
         <String, dynamic>{'enable': newValue},
       );
     } on PlatformException catch (e) {
